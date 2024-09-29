@@ -1,8 +1,17 @@
 import flet as ft
+from utils.Plotting2D import Plot2D
+from utils.Plotting3D import Plot3D
 import csv
+
 
 class DefaultPageLayout(ft.Container):
     def build(self):
+        self.graph_widget_1 = Plot2D(1)
+        self.graph_widget_2 = Plot2D(2)
+        self.graph_widget_3 = Plot2D(3)
+        self.graph_widget_4 = Plot2D(4)
+        self.graph_widget_5 = Plot3D(5)
+
         root_column = ft.Column()
         row_1 = ft.Row(spacing=25)
         row_2 = ft.Row(spacing=25)
@@ -35,14 +44,14 @@ class DefaultPageLayout(ft.Container):
                 ft.Row(
                     controls=[
                         ft.Container(
-                            content=ft.Text(".."),
+                            content=self.graph_widget_1.get_chart(),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
                         ),
                         ft.Container(
-                            content=ft.Text(".."),
+                            content=self.graph_widget_2.get_chart(),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
@@ -54,14 +63,14 @@ class DefaultPageLayout(ft.Container):
                 ft.Row(
                     controls=[
                         ft.Container(
-                            content=ft.Text(".."),
+                            content=self.graph_widget_3.get_chart(),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
                         ),
                         ft.Container(
-                            content=ft.Text(".."),
+                            content=self.graph_widget_4.get_chart(),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
@@ -80,7 +89,7 @@ class DefaultPageLayout(ft.Container):
                             alignment=ft.alignment.center,
                         ),
                         ft.Container(
-                            content=ft.Text(".."),
+                            content=self.graph_widget_5.get_chart(),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
@@ -97,14 +106,14 @@ class DefaultPageLayout(ft.Container):
         rendered_section=ft.Column(
             controls=[
                 ft.Container(
-                            content=ft.Text(".."),
+                            content=ft.Image(src="assets\\Screenshot 2024-09-28 203237.png"),
                             height=550,
                             width=300,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center                            
                         ),
                 ft.Container(
-                            content=ft.Text(".."),
+                            content=ft.Image(src="assets\\Screenshot 2024-09-28 202905.png"),
                             height=275,
                             width=300,
                             bgcolor=ft.colors.BLACK,
@@ -190,3 +199,11 @@ class DefaultPageLayout(ft.Container):
         reader = csv.reader(data_src)
         for row in reader:
             self.data=row
+
+    
+    def did_mount(self):
+        self.page.run_thread(self.graph_widget_1.graphing(True))
+        self.page.run_thread(self.graph_widget_2.graphing(True))
+        self.page.run_thread(self.graph_widget_3.graphing(True))
+        self.page.run_thread(self.graph_widget_4.graphing(True))
+        self.page.run_thread(self.graph_widget_5.graphing(True))
