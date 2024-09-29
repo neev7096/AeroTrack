@@ -1,6 +1,7 @@
 import flet as ft
 from utils.Plotting2D import Plot2D
 from utils.Plotting3D import Plot3D
+from components.views.UplinkTerminal import Console
 import csv
 
 
@@ -12,6 +13,7 @@ class DefaultPageLayout(ft.Container):
         self.graph_widget_4 = Plot2D(4)
         self.graph_widget_5 = Plot3D(5)
 
+        console = Console()
         root_column = ft.Column()
         row_1 = ft.Row(spacing=25)
         row_2 = ft.Row(spacing=25)
@@ -184,6 +186,7 @@ class DefaultPageLayout(ft.Container):
                                                   bgcolor=ft.colors.WHITE, padding=1)) #3D Vis Section into Container into row_1
 
         row_2.controls.append(control_panel)
+        row_2.controls.append(console)
         root_column.controls=[row_1,row_2] #row_1 and row_2 into RootColumn
 
         self.content = root_column
