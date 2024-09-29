@@ -1,17 +1,17 @@
 import flet as ft
 from utils.Plotting2D import Plot2D
 from utils.Plotting3D import Plot3D
-from components.views.UplinkTerminal import Console
+from components.views.UplinkConsole import Console
 import csv
 
 
 class DefaultPageLayout(ft.Container):
     def build(self):
-        self.graph_widget_1 = Plot2D(1)
-        self.graph_widget_2 = Plot2D(2)
-        self.graph_widget_3 = Plot2D(3)
-        self.graph_widget_4 = Plot2D(4)
-        self.graph_widget_5 = Plot3D(5)
+        self.graph_widget_1 = Plot2D("Altitude (m)", para_index=1)
+        self.graph_widget_2 = Plot2D("Velocity (m/s)", para_index=2)
+        self.graph_widget_3 = Plot2D("Acceleration (m/s^2)", para_index=3)
+        self.graph_widget_4 = Plot2D("Thrust (N)", para_index=4)
+        self.graph_widget_5 = Plot3D("Position")
 
         console = Console()
         root_column = ft.Column()
@@ -46,49 +46,101 @@ class DefaultPageLayout(ft.Container):
                 ft.Row(
                     controls=[
                         ft.Container(
-                            content=self.graph_widget_1.get_chart(),
+                            content=ft.Column(controls=[ft.Text(f"{self.graph_widget_1.header}"),self.graph_widget_1.get_chart()],
+                            alignment=ft.alignment.center,spacing=0),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
+                            border=ft.border.all(color=ft.colors.WHITE),
+                            padding=10
                         ),
                         ft.Container(
-                            content=self.graph_widget_2.get_chart(),
+                            content=ft.Column(controls=[ft.Text(f"{self.graph_widget_2.header}"),self.graph_widget_2.get_chart()],
+                            alignment=ft.alignment.center,spacing=0),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
+                            border=ft.border.all(color=ft.colors.WHITE),
+                            padding=10
                         )
                     ],
-                    spacing=1
+                    spacing=0
                 ),
                 ft.Row(
                     controls=[
                         ft.Container(
-                            content=self.graph_widget_3.get_chart(),
+                            content=ft.Column(controls=[ft.Text(f"{self.graph_widget_3.header}"),self.graph_widget_3.get_chart()],
+                            alignment=ft.alignment.center,spacing=0),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
+                            border=ft.border.all(color=ft.colors.WHITE),
+                            padding=10
                         ),
                         ft.Container(
-                            content=self.graph_widget_4.get_chart(),
+                            content=ft.Column(controls=[ft.Text(f"{self.graph_widget_4.header}"),self.graph_widget_4.get_chart()],
+                            alignment=ft.alignment.center,spacing=0),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
+                            border=ft.border.all(color=ft.colors.WHITE),
+                            padding=10
                         )
                     ],
-                    spacing=1
+                    spacing=0
                 ),
                 ft.Row(
                     controls=[
                         ft.Container(
-                            content=ft.Text("TIMELINE", color=ft.colors.WHITE),
+                            content=ft.Column(
+                                controls=[
+                                    ft.Row(
+                                        controls=[
+                                            ft.Text("BOOT",size=10),
+                                            ft.Text("IDLE",size=10),
+                                            ft.Text("TEST",size=10),
+                                            ft.Text("LAUNCH_PAD",size=10),
+                                            ft.Text("ASCENT",size=10),
+                                            ft.Text("DEPLOY",size=10),
+                                            ft.Text("DESCENT",size=10),
+                                            ft.Text("SDESCENT",size=10), 
+                                            ft.Text("TOUCHDOWN",size=10)
+                                        ],
+                                        spacing=12
+                                    ),
+                                    ft.ProgressBar(
+                                        value=0.25,
+                                        bar_height=15,
+                                        border_radius=10
+                                    ),
+                                    ft.Container(
+                                        content=ft.Column(
+                                            controls=[
+                                                ft.Text("Downlink Packet String:",weight=ft.FontWeight.W_700,size=16),
+                                                ft.Text("> 2024ASI-CANSAT-001,BOOT,1.3,1,0,0.1,23.4,5,0,3.3,1.3,23.4532,72.6633,100,4,0.00,0.00,0.00"),
+                                                ft.Text("> 2024ASI-CANSAT-001,BOOT,1.3,1,0,0.1,23.4,5,0,3.3,1.3,23.4532,72.6633,100,4,0.00,0.00,0.00"),
+                                                ft.Text("> 2024ASI-CANSAT-001,BOOT,1.3,1,0,0.1,23.4,5,0,3.3,1.3,23.4532,72.6633,100,4,0.00,0.00,0.00"),
+                                                ft.Text("> 2024ASI-CANSAT-001,BOOT,1.3,1,0,0.1,23.4,5,0,3.3,1.3,23.4532,72.6633,100,4,0.00,0.00,0.00"),
+                                                ft.Text("> 2024ASI-CANSAT-001,BOOT,1.3,1,0,0.1,23.4,5,0,3.3,1.3,23.4532,72.6633,100,4,0.00,0.00,0.00"),
+                                                ft.Text("> 2024ASI-CANSAT-001,BOOT,1.3,1,0,0.1,23.4,5,0,3.3,1.3,23.4532,72.6633,100,4,0.00,0.00,0.00")
+                                            ],
+                                            scroll=ft.ScrollMode.AUTO,
+                                            height=200,
+                                            spacing=0
+                                        )
+                                    )
+                                ],
+                            ),
                             height=275,
                             width=495,
                             bgcolor=ft.colors.BLACK,
+                            border=ft.border.all(color=ft.colors.WHITE),
                             alignment=ft.alignment.center,
+                            padding=15
                         ),
                         ft.Container(
                             content=self.graph_widget_5.get_chart(),
@@ -96,23 +148,26 @@ class DefaultPageLayout(ft.Container):
                             width=495,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
+                            border=ft.border.all(color=ft.colors.WHITE),
+                            padding=10
                         )
                     ],
-                    spacing=1
+                    spacing=0
                 )
             ],
-            spacing=1
+            spacing=0
         )
 
         #Rocket Model Visualization Area
         rendered_section=ft.Column(
             controls=[
                 ft.Container(
-                            content=ft.Image(src="assets\\Screenshot 2024-09-28 203237.png"),
+                            content=ft.Text(""),
                             height=550,
                             width=300,
                             bgcolor=ft.colors.BLACK,
-                            alignment=ft.alignment.center                            
+                            alignment=ft.alignment.center, 
+                            border=ft.border.all(color=ft.colors.WHITE)                          
                         ),
                 ft.Container(
                             content=ft.Image(src="assets\\Screenshot 2024-09-28 202905.png"),
@@ -120,70 +175,28 @@ class DefaultPageLayout(ft.Container):
                             width=300,
                             bgcolor=ft.colors.BLACK,
                             alignment=ft.alignment.center,
-                            padding=5
+                            padding=5,
+                            border=ft.border.all(color=ft.colors.WHITE)
                         )
             ],
-            spacing=1
+            spacing=0
         )
 
         #Command Panel Layout
         control_panel = ft.Container(
-            content=ft.Column(
-                controls=[
-                    ft.Row(
-                        controls=[
-                            ft.FilledTonalButton(
-                                content=ft.Text("IDLE"),
-                                style=ft.ButtonStyle(
-                                    shape=ft.RoundedRectangleBorder(radius=2),
-                                    bgcolor={ft.ControlState.HOVERED: "#45a29e", ft.ControlState.DEFAULT: "#1f2833"},
-                                    color={ft.ControlState.HOVERED: ft.colors.BLACK, ft.ControlState.DEFAULT: ft.colors.WHITE}
-                                ),
-                                height=44,
-                                width=113
-                            ),
-                            ft.FilledTonalButton(
-                                content=ft.Text("TEST"),
-                                style=ft.ButtonStyle(
-                                    shape=ft.RoundedRectangleBorder(radius=2),
-                                    bgcolor={ft.ControlState.HOVERED: "#45a29e", ft.ControlState.DEFAULT: "#1f2833"},
-                                    color={ft.ControlState.HOVERED: ft.colors.BLACK, ft.ControlState.DEFAULT: ft.colors.WHITE}
-                                ),
-                                height=44,
-                                width=113
-                            ),
-                            ft.FilledTonalButton(
-                                content=ft.Text("ABORT"),
-                                style=ft.ButtonStyle(
-                                    shape=ft.RoundedRectangleBorder(radius=2),
-                                    bgcolor={ft.ControlState.HOVERED: ft.colors.RED, ft.ControlState.DEFAULT: "#1f2833"},
-                                    color={ft.ControlState.HOVERED: ft.colors.BLACK, ft.ControlState.DEFAULT: ft.colors.WHITE}
-                                ),
-                                height=44,
-                                width=113
-                            )
-                        ],
-                        spacing=1,
-                        expand=True
-                    ),
-                    ft.Container(
-                        content=ft.Text(value="11 : 11 : 11",size=48,weight=ft.FontWeight.W_600,color=ft.colors.GREEN),
+                        content=ft.Text(value="09 : 11 : 01",size=48,weight=ft.FontWeight.W_600,color=ft.colors.GREEN),
                         width=342,
-                        height=67,
+                        height=113,
+                        border=ft.border.all(color=ft.colors.WHITE),
                         alignment=ft.alignment.center
-                    )
-                ],
-                spacing=10
-            ),
-            height=112,   
         )
         
         #Inserting controls into Root Widget
         row_1.controls.append(data_table) #Data Table into row_1
         row_1.controls.append(ft.Container(content=graph_section,
-                                                  bgcolor=ft.colors.WHITE, padding=1,expand=True)) #Graph Section into Container into row_1
+                                                  padding=0,expand=True,border=ft.border.all(color=ft.colors.WHITE))) #Graph Section into Container into row_1
         row_1.controls.append(ft.Container(content=rendered_section,
-                                                  bgcolor=ft.colors.WHITE, padding=1)) #3D Vis Section into Container into row_1
+                                                  bgcolor=ft.colors.WHITE, padding=1,border=ft.border.all(color=ft.colors.WHITE))) #3D Vis Section into Container into row_1
 
         row_2.controls.append(control_panel)
         row_2.controls.append(console)
@@ -205,8 +218,8 @@ class DefaultPageLayout(ft.Container):
 
     
     def did_mount(self):
-        self.page.run_thread(self.graph_widget_1.graphing(True))
-        self.page.run_thread(self.graph_widget_2.graphing(True))
-        self.page.run_thread(self.graph_widget_3.graphing(True))
-        self.page.run_thread(self.graph_widget_4.graphing(True))
+        self.page.run_thread(self.graph_widget_1.graphing())
+        self.page.run_thread(self.graph_widget_2.graphing())
+        self.page.run_thread(self.graph_widget_3.graphing())
+        self.page.run_thread(self.graph_widget_4.graphing())
         self.page.run_thread(self.graph_widget_5.graphing(True))
