@@ -162,7 +162,7 @@ class DefaultPageLayout(ft.Container):
         rendered_section=ft.Column(
             controls=[
                 ft.Container(
-                            content=ft.Text(""),
+                            content=ft.Image("assets\\file_2024-09-29_21.43.40.png"),
                             height=550,
                             width=300,
                             bgcolor=ft.colors.BLACK,
@@ -184,7 +184,7 @@ class DefaultPageLayout(ft.Container):
 
         #Command Panel Layout
         control_panel = ft.Container(
-                        content=ft.Text(value="09 : 11 : 01",size=48,weight=ft.FontWeight.W_600,color=ft.colors.GREEN),
+                        content=ft.Text(value="00 : 00 : 00",size=48,weight=ft.FontWeight.W_600,color=ft.colors.GREEN),
                         width=342,
                         height=113,
                         border=ft.border.all(color=ft.colors.WHITE),

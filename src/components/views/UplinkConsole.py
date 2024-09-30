@@ -2,7 +2,7 @@ import flet as ft
 
 class Console(ft.Container):
     def build(self):
-        self.output = ft.Column(height=100,scroll=ft.ScrollMode.ALWAYS,spacing=1)
+        self.output = ft.Column(controls=[ft.Text("Uplink Command Log: ",size=16,weight=ft.FontWeight.W_700)],height=100,scroll=ft.ScrollMode.ALWAYS,spacing=1)
 
         self.cmd_field = ft.TextField(
             hint_text="Enter Command",
